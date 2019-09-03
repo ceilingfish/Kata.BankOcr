@@ -13,15 +13,24 @@ namespace Kata.BankOcr
             var reader = new OcrRowReader(args[0]);
             await reader
                 .Rows()
-                .ForEachAsync(glyphs =>
+                .Select(glyphs =>
                 {
-                    foreach(var glyph in glyphs)
+                    return glyphs.Select(glyph => 
                     {
                         if (parser.TryParse(glyph, out var number))
                         {
-                            Console.WriteLine("Found {0} at ({1},{2})", number, glyph.Row, glyph.Column);
+                            return new OcrNumber(number, glyph);
                         }
-                    }
+                        else
+                        {
+                            return new OcrNumber(glyph);
+                        }
+                    });
+                })
+                .ForEachAsync(row => 
+                {
+                    var accountNumber = string.Join("", row);
+                    Console.WriteLine(accountNumber);
                 });
             Console.ReadLine();
         }
