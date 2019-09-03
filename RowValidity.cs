@@ -8,6 +8,7 @@ namespace Kata.BankOcr
     {
         Valid,
         Illegible,
-        Error
+        Error,
+        Ambiguous
     }
 }

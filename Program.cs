@@ -32,25 +32,45 @@ namespace Kata.BankOcr
                 .Rows()
                 .Select(glyphs =>
                 {
-                    var row = new OcrNumber[glyphs.Count];
+                    var numbers = new OcrNumber[glyphs.Count];
 
-                    for(int i=0;i<row.Length;i++)
+                    for(int i=0;i<numbers.Length;i++)
                     {
                         var glyph = glyphs[i];
                         if (parser.TryParse(glyph, out var number))
                         {
-                            row[i] = new OcrNumber(number, glyph);
+                            numbers[i] = new OcrNumber(number, glyph);
                         }
                         else
                         {
-                            row[i] = new OcrNumber(glyph);
+                            numbers[i] = new OcrNumber(glyph);
                         }
                     }
-                    return new OcrNumberRow(row);
+                    var row = new OcrNumberRow(numbers);
+
+                    if(row.Validity != RowValidity.Valid)
+                    {
+                        var variants = row
+                            .GenerateVariants()
+                            .Where(v => v.Validity == RowValidity.Valid)
+                            .ToArray();
+
+                        switch(variants.Length)
+                        {
+                            case 0: return row;
+                            case 1: return variants[0];
+                            default:
+                                row.Validity = RowValidity.Ambiguous;
+                                return row;
+                        }
+                    }
+
+                    return row;
                 })
+
                 .ToArray();
             
-            if(!string.IsNullOrEmpty(args[1]))
+            if(args.Length > 1 && !string.IsNullOrEmpty(args[1]))
             {
                 await File.WriteAllLinesAsync(args[1], results.Select(r => r.ToString()));
                 Console.WriteLine("Output written to {0}", args[1]);
