@@ -2,7 +2,7 @@
   "profiles": {
     "Kata.BankOcr": {
       "commandName": "Project",
-      "commandLineArgs": "\"C:\\personal\\Kata.BankOcr\\Data\\usecase3.txt\""
+      "commandLineArgs": "\"C:\\personal\\Kata.BankOcr\\Data\\usecase3.txt\" c:\\temp\\ocr_results.txt"
     }
   }
 }

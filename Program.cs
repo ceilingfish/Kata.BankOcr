@@ -24,9 +24,11 @@ namespace Kata.BankOcr
             //});
             //return;
 
+
+
             var parser = CascadingOcrGlyphParser.Default;
             var reader = new OcrRowReader(args[0]);
-            await reader
+            var results = await reader
                 .Rows()
                 .Select(glyphs =>
                 {
@@ -44,13 +46,22 @@ namespace Kata.BankOcr
                             row[i] = new OcrNumber(glyph);
                         }
                     }
-
                     return new OcrNumberRow(row);
                 })
-                .ForEachAsync(row => 
+                .ToArray();
+            
+            if(!string.IsNullOrEmpty(args[1]))
+            {
+                await File.WriteAllLinesAsync(args[1], results.Select(r => r.ToString()));
+                Console.WriteLine("Output written to {0}", args[1]);
+            }
+            else
+            {
+                foreach(var row in results)
                 {
                     Console.WriteLine(row);
-                });
+                }
+            }
             Console.ReadLine();
         }
     }
