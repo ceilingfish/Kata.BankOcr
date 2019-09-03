@@ -15,7 +15,7 @@ namespace Kata.BankOcr
             get => numbers[index];
         }
 
-        public bool IsValid
+        public RowValidity Validity
         {
             get
             {
@@ -25,12 +25,12 @@ namespace Kata.BankOcr
                     var accountNumber = numbers[numbers.Count - i - 1];
                     if(!accountNumber.Number.HasValue)
                     {
-                        return false;
+                        return RowValidity.Illegible;
                     }
                     sum += accountNumber.Number.Value * (i+1);
                 }
 
-                return sum % 11 == 0;
+                return sum % 11 == 0 ? RowValidity.Valid : RowValidity.Error;
             }
         }
 
@@ -45,6 +45,24 @@ namespace Kata.BankOcr
 
         IEnumerator IEnumerable.GetEnumerator() => numbers.GetEnumerator();
 
-        public override string ToString() => string.Join("", numbers);
+        public override string ToString() {
+            
+            var builder = new StringBuilder();
+            foreach(var number in numbers)
+            {
+                builder.Append(number);
+            }
+            switch(Validity)
+            {
+                case RowValidity.Error:
+                    builder.Append(" ERR");
+                    break;
+                case RowValidity.Illegible:
+                    builder.Append(" ILL");
+                    break;
+            }
+            
+            return builder.ToString();
+        }
     }
 }
