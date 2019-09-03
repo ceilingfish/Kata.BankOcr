@@ -1,22 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Kata.BankOcr
 {
     public class CascadingOcrGlyphParser : IOcrGlphyParser
     {
-        public  static CascadingOcrGlyphParser Default { get; } = new CascadingOcrGlyphParser(
-            CharacterMatchingGlyphParser.One,
-            CharacterMatchingGlyphParser.Two,
-            CharacterMatchingGlyphParser.Three,
-            CharacterMatchingGlyphParser.Four,
-            CharacterMatchingGlyphParser.Five,
-            CharacterMatchingGlyphParser.Six,
-            CharacterMatchingGlyphParser.Seven,
-            CharacterMatchingGlyphParser.Eight,
-            CharacterMatchingGlyphParser.Nine
-        );
+        public  static CascadingOcrGlyphParser Default { get; } = new CascadingOcrGlyphParser(CharacterMatchingGlyphParser.Numbers.ToArray());
 
 
         private readonly IEnumerable<IOcrGlphyParser> parsers;
