@@ -1,23 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Reactive.Linq;
-using System.Reactive.Threading.Tasks;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
+using System.Linq;
 using Xunit;
 
 namespace Kata.BankOcr.Core.Tests
 {
-    public class OcrRowReaderTests
+    public class GlyphRowReaderTests
     {
         [Fact]
-        public async Task CanReadASingleGlyph()
+        public void CanReadASingleGlyph()
         {
-            var temp = Path.GetTempFileName();
-            await File.WriteAllLinesAsync(temp, new[] { "123", "456", "789", "012" });
-            var reader = new OcrRowReader(temp);
-            var rows = await reader.Rows().ToArray();
+            var rows = GlyphRowReader.Read(new[] { "123", "456", "789", "012" }).ToArray();
             var row = Assert.Single(rows);
             var glyph = Assert.Single(row);
             Assert.Equal('1', glyph[0, 0]);
@@ -32,12 +24,9 @@ namespace Kata.BankOcr.Core.Tests
         }
 
         [Fact]
-        public async Task CanReadConsecutiveGlyphs()
+        public void CanReadConsecutiveGlyphs()
         {
-            var temp = Path.GetTempFileName();
-            await File.WriteAllLinesAsync(temp, new[] { "123456", "789012", "abcdef", "ghijkl" });
-            var reader = new OcrRowReader(temp);
-            var rows = await reader.Rows().ToArray();
+            var rows = GlyphRowReader.Read(new[] { "123456", "789012", "abcdef", "ghijkl" }).ToArray();
             var row = Assert.Single(rows);
             Assert.Equal(2, row.Count);
             var first = row[0];
@@ -64,12 +53,20 @@ namespace Kata.BankOcr.Core.Tests
         }
 
         [Fact]
-        public async Task CanReadRowsOfGlyphs()
+        public void CanReadRowsOfGlyphs()
         {
-            var temp = Path.GetTempFileName();
-            await File.WriteAllLinesAsync(temp, new[] { "123", "456", "789", "012", "abc", "def", "ghi", "jkl" });
-            var reader = new OcrRowReader(temp);
-            var rows = await reader.Rows().ToArray();
+            var rows = GlyphRowReader
+                .Read(new[]
+                { 
+                    "123",
+                    "456",
+                    "789",
+                    "012",
+                    "abc",
+                    "def",
+                    "ghi",
+                    "jkl" 
+                }).ToArray();
             Assert.Equal(2, rows.Length);
             var firstRow = rows[0];
             var first = Assert.Single(firstRow);
@@ -97,23 +94,15 @@ namespace Kata.BankOcr.Core.Tests
         }
 
         [Fact]
-        public async Task ThrowsOnInvalidColumnLength()
+        public void ThrowsOnInvalidColumnLength()
         {
-            var temp = Path.GetTempFileName();
-            await File.WriteAllLinesAsync(temp, new[] { "123", "456", "789", "0" });
-            var reader = new OcrRowReader(temp);
-
-            await Assert.ThrowsAsync<InvalidDataException>(() => reader.Rows().ToTask());
+            Assert.Throws<InvalidDataException>(() => GlyphRowReader.Read(new[] { "123", "456", "789", "0" }).ToArray());
         }
 
         [Fact]
-        public async Task ThrowsOnInvalidRowLength()
+        public void ThrowsOnInvalidRowLength()
         {
-            var temp = Path.GetTempFileName();
-            await File.WriteAllLinesAsync(temp, new[] { "123", "456", "789" });
-            var reader = new OcrRowReader(temp);
-
-            await Assert.ThrowsAsync<InvalidDataException>(() => reader.Rows().ToTask());
+            Assert.Throws<InvalidDataException>(() => GlyphRowReader.Read(new[] { "123", "456", "789" }).ToArray());
         }
     }
 }

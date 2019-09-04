@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reactive.Linq;
 using System.Threading.Tasks;
 
 namespace Kata.BankOcr
@@ -12,10 +11,10 @@ namespace Kata.BankOcr
     {
         static async Task Main(string[] args)
         {
-            var reader = new OcrRowReader(args[0]);
+            var lines = await File.ReadAllLinesAsync(args[0]);
             var validator = new ChecksumAccountValidator();
-            var results = await reader
-                .Rows()
+            var results = GlyphRowReader
+                .Read(lines)
                 .Select(glyphs =>
                 {
                     var account = AccountNumber.Parse(glyphs);

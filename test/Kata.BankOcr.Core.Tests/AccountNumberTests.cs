@@ -10,13 +10,6 @@ namespace Kata.BankOcr.Core.Tests
         [Fact]
         public void IsLegibleIfAllDigitsLegible()
         {
-            var matrix = new char[3,3]
-            {
-                { ' ', ' ', '|' },
-                { ' ', ' ', '|' },
-                { ' ', ' ', '|' }
-            };
-
             var first = new Digit(1, Glyph.One);
             var second = new Digit(1, Glyph.One);
 
