@@ -22,6 +22,12 @@ namespace Kata.BankOcr.Core
             {
                 var lines = File.ReadLines(file).ToArray();
 
+                if(lines.Length % 4 != 0)
+                {
+                    observer.OnError(new InvalidDataException("Invalid row count"));
+                    return Disposable.Empty;
+                }
+
                 var rows = lines.Length/4;
                 for(int row=0;row<rows;row++)
                 {
@@ -29,9 +35,10 @@ namespace Kata.BankOcr.Core
                     var line1 = lines[yOffset];
                     var line2 = lines[yOffset + 1];
                     var line3 = lines[yOffset + 2];
-                    if(line1.Length != line2.Length || line2.Length != line3.Length)
+                    var line4 = lines[yOffset + 3];
+                    if(line1.Length != line2.Length || line2.Length != line3.Length || line3.Length != line4.Length)
                     {
-                        observer.OnError(new InvalidDataException(FormattableString.Invariant($"Mismatching row lengths found starting at row {yOffset}")));
+                        observer.OnError(new InvalidDataException(FormattableString.Invariant($"Mismatching column lengths found starting at row {yOffset}")));
                         return Disposable.Empty;
                     }
 
