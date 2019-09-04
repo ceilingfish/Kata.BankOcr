@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Text;
 
@@ -17,9 +18,9 @@ namespace Kata.BankOcr
         }
         public IObservable<IReadOnlyList<OcrGlyph>> Rows()
         {
-            return Observable.Create< IReadOnlyList<OcrGlyph>>(async (observer, ct) =>
+            return Observable.Create<IReadOnlyList<OcrGlyph>>(observer =>
             {
-                var lines = await File.ReadAllLinesAsync(file, ct);
+                var lines = File.ReadLines(file).ToArray();
 
                 var rows = lines.Length/4;
                 for(int row=0;row<rows;row++)
@@ -31,7 +32,7 @@ namespace Kata.BankOcr
                     if(line1.Length != line2.Length || line2.Length != line3.Length)
                     {
                         observer.OnError(new InvalidDataException(FormattableString.Invariant($"Mismatching row lengths found starting at row {yOffset}")));
-                        return;
+                        return Disposable.Empty;
                     }
 
                     var columns = line1.Length / 3;
@@ -50,6 +51,10 @@ namespace Kata.BankOcr
 
                     observer.OnNext(glyphs);
                 }
+
+                observer.OnCompleted();
+
+                return Disposable.Empty;
             });
         } 
     }

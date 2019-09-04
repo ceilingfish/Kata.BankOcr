@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "Kata.BankOcr": {
-      "commandName": "Project",
-      "commandLineArgs": "\"C:\\personal\\Kata.BankOcr\\Data\\usecase4.txt\""
-    }
-  }
-}
