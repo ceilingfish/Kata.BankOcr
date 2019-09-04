@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Kata.BankOcr
+namespace Kata.BankOcr.Core
 {
     public interface IGlyphParser
     {

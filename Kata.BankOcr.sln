@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kata.BankOcr.Console", "src
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kata.BankOcr.Core", "src\Kata.BankOcr.Core\Kata.BankOcr.Core.csproj", "{CC5F38B3-1876-4E62-95E2-6AE2DEC719FF}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{5B54D9DC-2466-4AF9-A434-0AAD1BD7EA74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kata.BankOcr.Core.Tests", "test\Kata.BankOcr.Core.Tests\Kata.BankOcr.Core.Tests.csproj", "{C546E750-4728-4541-9F00-B7611CDF6262}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +27,10 @@ Global
 		{CC5F38B3-1876-4E62-95E2-6AE2DEC719FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC5F38B3-1876-4E62-95E2-6AE2DEC719FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC5F38B3-1876-4E62-95E2-6AE2DEC719FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C546E750-4728-4541-9F00-B7611CDF6262}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C546E750-4728-4541-9F00-B7611CDF6262}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C546E750-4728-4541-9F00-B7611CDF6262}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C546E750-4728-4541-9F00-B7611CDF6262}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -30,6 +38,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{65D658C3-5CDA-4D77-9568-87E4F877DE50} = {A603BBF1-978C-4B6B-93FA-EF9743DC5DD6}
 		{CC5F38B3-1876-4E62-95E2-6AE2DEC719FF} = {A603BBF1-978C-4B6B-93FA-EF9743DC5DD6}
+		{C546E750-4728-4541-9F00-B7611CDF6262} = {5B54D9DC-2466-4AF9-A434-0AAD1BD7EA74}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {939811DF-D845-424A-B50A-365788DAE67D}

@@ -6,7 +6,7 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Text;
 
-namespace Kata.BankOcr
+namespace Kata.BankOcr.Core
 {
     public class OcrRowReader
     {
