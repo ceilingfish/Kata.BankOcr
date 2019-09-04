@@ -81,7 +81,7 @@ namespace Kata.BankOcr.Core
 
         private readonly GlyphCharacter[,] characters;
 
-        public GlyphCharacter this[int x, int y] => characters[y, x];
+        public GlyphCharacter this[int x, int y] => characters[x, y];
 
         public int Width => characters.GetLength(1);
 
