@@ -20,17 +20,15 @@ namespace Kata.BankOcr.Core.Tests
             var rows = await reader.Rows().ToArray();
             var row = Assert.Single(rows);
             var glyph = Assert.Single(row);
-            Assert.Equal(3, glyph.Characters.GetLength(0));
-            Assert.Equal(3, glyph.Characters.GetLength(1));
-            Assert.Equal('1', glyph.Characters[0, 0]);
-            Assert.Equal('2', glyph.Characters[0, 1]);
-            Assert.Equal('3', glyph.Characters[0, 2]);
-            Assert.Equal('4', glyph.Characters[1, 0]);
-            Assert.Equal('5', glyph.Characters[1, 1]);
-            Assert.Equal('6', glyph.Characters[1, 2]);
-            Assert.Equal('7', glyph.Characters[2, 0]);
-            Assert.Equal('8', glyph.Characters[2, 1]);
-            Assert.Equal('9', glyph.Characters[2, 2]);
+            Assert.Equal('1', glyph[0, 0]);
+            Assert.Equal('2', glyph[1, 0]);
+            Assert.Equal('3', glyph[2, 0]);
+            Assert.Equal('4', glyph[0, 1]);
+            Assert.Equal('5', glyph[1, 1]);
+            Assert.Equal('6', glyph[2, 1]);
+            Assert.Equal('7', glyph[0, 2]);
+            Assert.Equal('8', glyph[1, 2]);
+            Assert.Equal('9', glyph[2, 2]);
         }
 
         [Fact]
@@ -43,26 +41,26 @@ namespace Kata.BankOcr.Core.Tests
             var row = Assert.Single(rows);
             Assert.Equal(2, row.Count);
             var first = row[0];
-            Assert.Equal('1', first.Characters[0, 0]);
-            Assert.Equal('2', first.Characters[0, 1]);
-            Assert.Equal('3', first.Characters[0, 2]);
-            Assert.Equal('7', first.Characters[1, 0]);
-            Assert.Equal('8', first.Characters[1, 1]);
-            Assert.Equal('9', first.Characters[1, 2]);
-            Assert.Equal('a', first.Characters[2, 0]);
-            Assert.Equal('b', first.Characters[2, 1]);
-            Assert.Equal('c', first.Characters[2, 2]);
+            Assert.Equal('1', first[0, 0]);
+            Assert.Equal('2', first[1, 0]);
+            Assert.Equal('3', first[2, 0]);
+            Assert.Equal('7', first[0, 1]);
+            Assert.Equal('8', first[1, 1]);
+            Assert.Equal('9', first[2, 1]);
+            Assert.Equal('a', first[0, 2]);
+            Assert.Equal('b', first[1, 2]);
+            Assert.Equal('c', first[2, 2]);
 
             var second = row[1];
-            Assert.Equal('4', second.Characters[0, 0]);
-            Assert.Equal('5', second.Characters[0, 1]);
-            Assert.Equal('6', second.Characters[0, 2]);
-            Assert.Equal('0', second.Characters[1, 0]);
-            Assert.Equal('1', second.Characters[1, 1]);
-            Assert.Equal('2', second.Characters[1, 2]);
-            Assert.Equal('d', second.Characters[2, 0]);
-            Assert.Equal('e', second.Characters[2, 1]);
-            Assert.Equal('f', second.Characters[2, 2]);
+            Assert.Equal('4', second[0, 0]);
+            Assert.Equal('5', second[1, 0]);
+            Assert.Equal('6', second[2, 0]);
+            Assert.Equal('0', second[0, 1]);
+            Assert.Equal('1', second[1, 1]);
+            Assert.Equal('2', second[2, 1]);
+            Assert.Equal('d', second[0, 2]);
+            Assert.Equal('e', second[1, 2]);
+            Assert.Equal('f', second[2, 2]);
         }
 
         [Fact]
@@ -75,27 +73,27 @@ namespace Kata.BankOcr.Core.Tests
             Assert.Equal(2, rows.Length);
             var firstRow = rows[0];
             var first = Assert.Single(firstRow);
-            Assert.Equal('1', first.Characters[0, 0]);
-            Assert.Equal('2', first.Characters[0, 1]);
-            Assert.Equal('3', first.Characters[0, 2]);
-            Assert.Equal('4', first.Characters[1, 0]);
-            Assert.Equal('5', first.Characters[1, 1]);
-            Assert.Equal('6', first.Characters[1, 2]);
-            Assert.Equal('7', first.Characters[2, 0]);
-            Assert.Equal('8', first.Characters[2, 1]);
-            Assert.Equal('9', first.Characters[2, 2]);
+            Assert.Equal('1', first[0, 0]);
+            Assert.Equal('2', first[1, 0]);
+            Assert.Equal('3', first[2, 0]);
+            Assert.Equal('4', first[0, 1]);
+            Assert.Equal('5', first[1, 1]);
+            Assert.Equal('6', first[2, 1]);
+            Assert.Equal('7', first[0, 2]);
+            Assert.Equal('8', first[1, 2]);
+            Assert.Equal('9', first[2, 2]);
 
             var secondRow = rows[1];
             var second = Assert.Single(secondRow);
-            Assert.Equal('a', second.Characters[0, 0]);
-            Assert.Equal('b', second.Characters[0, 1]);
-            Assert.Equal('c', second.Characters[0, 2]);
-            Assert.Equal('d', second.Characters[1, 0]);
-            Assert.Equal('e', second.Characters[1, 1]);
-            Assert.Equal('f', second.Characters[1, 2]);
-            Assert.Equal('g', second.Characters[2, 0]);
-            Assert.Equal('h', second.Characters[2, 1]);
-            Assert.Equal('i', second.Characters[2, 2]);
+            Assert.Equal('a', second[0, 0]);
+            Assert.Equal('b', second[1, 0]);
+            Assert.Equal('c', second[2, 0]);
+            Assert.Equal('d', second[0, 1]);
+            Assert.Equal('e', second[1, 1]);
+            Assert.Equal('f', second[2, 1]);
+            Assert.Equal('g', second[0, 2]);
+            Assert.Equal('h', second[1, 2]);
+            Assert.Equal('i', second[2, 2]);
         }
 
         [Fact]

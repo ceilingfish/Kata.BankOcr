@@ -14,49 +14,35 @@ namespace Kata.BankOcr.Core.Tests
             var validator = new ChecksumAccountValidator();
             var illegibleAccount = new AccountNumber(new[]
             {
-                new Digit(new Glyph(1,1,new char[3,3]
-            {
-                { 'a', 'b', 'c' },
-                { 'd', 'e', 'f' },
-                { 'g', 'h', 'i' }
-            })),
-                new Digit(1, new Glyph(0,1,new char[3,3]
-            {
-                { 'a', 'b', 'c' },
-                { 'd', 'e', 'f' },
-                { 'g', 'h', 'i' }
-            }))
+                new Digit(new Glyph(new char[3,3]
+                {
+                    { 'a', 'b', 'c' },
+                    { 'd', 'e', 'f' },
+                    { 'g', 'h', 'i' }
+                })),
+                new Digit(1, Glyph.One)
             });
             var result = validator.Validate(illegibleAccount);
             Assert.False(result.IsValid);
             var illegibleResult = Assert.IsType<IllegibleAccountNumberValidationResult>(result);
-            var illegibleDigit = Assert.Single(illegibleResult.IllegibleDigits);
-            Assert.Equal(1, illegibleDigit.Glyph.Row);
-            Assert.Equal(1, illegibleDigit.Glyph.Column);
+            Assert.Single(illegibleResult.IllegibleDigits);
         }
 
         [Fact]
         public void BadChecksumsAreInvalid()
         {
-            var glyph = new Glyph(1, 1, new char[3, 3]
-            {
-                { 'a', 'b', 'c' },
-                { 'd', 'e', 'f' },
-                { 'g', 'h', 'i' }
-            });
-
             var validator = new ChecksumAccountValidator();
             var illegibleAccount = new AccountNumber(new[]
             {
-                new Digit(8, glyph),
-                new Digit(8, glyph),
-                new Digit(8, glyph),
-                new Digit(8, glyph),
-                new Digit(8, glyph),
-                new Digit(8, glyph),
-                new Digit(8, glyph),
-                new Digit(8, glyph),
-                new Digit(8, glyph)
+                new Digit(8, Glyph.Eight),
+                new Digit(8, Glyph.Eight),
+                new Digit(8, Glyph.Eight),
+                new Digit(8, Glyph.Eight),
+                new Digit(8, Glyph.Eight),
+                new Digit(8, Glyph.Eight),
+                new Digit(8, Glyph.Eight),
+                new Digit(8, Glyph.Eight),
+                new Digit(8, Glyph.Eight)
             });
             var result = validator.Validate(illegibleAccount);
             Assert.False(result.IsValid);
@@ -66,25 +52,18 @@ namespace Kata.BankOcr.Core.Tests
         [Fact]
         public void AccurateChecksumsAreValid()
         {
-            var glyph = new Glyph(1, 1, new char[3, 3]
-            {
-                { 'a', 'b', 'c' },
-                { 'd', 'e', 'f' },
-                { 'g', 'h', 'i' }
-            });
-
             var validator = new ChecksumAccountValidator();
             var illegibleAccount = new AccountNumber(new[]
             {
-                new Digit(7, glyph),
-                new Digit(1, glyph),
-                new Digit(1, glyph),
-                new Digit(1, glyph),
-                new Digit(1, glyph),
-                new Digit(1, glyph),
-                new Digit(1, glyph),
-                new Digit(1, glyph),
-                new Digit(1, glyph)
+                new Digit(7, Glyph.Seven),
+                new Digit(1, Glyph.One),
+                new Digit(1, Glyph.One),
+                new Digit(1, Glyph.One),
+                new Digit(1, Glyph.One),
+                new Digit(1, Glyph.One),
+                new Digit(1, Glyph.One),
+                new Digit(1, Glyph.One),
+                new Digit(1, Glyph.One)
             });
             var result = validator.Validate(illegibleAccount);
             Assert.True(result.IsValid);

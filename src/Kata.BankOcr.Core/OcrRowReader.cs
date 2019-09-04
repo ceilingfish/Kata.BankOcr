@@ -53,7 +53,7 @@ namespace Kata.BankOcr.Core
                                 { line2[xOffset], line2[xOffset+1], line2[xOffset+2] },
                                 { line3[xOffset], line3[xOffset+1], line3[xOffset+2] }
                         };
-                        glyphs[column] = new Glyph(row, column, matrix);
+                        glyphs[column] = new Glyph(matrix);
                     }
 
                     observer.OnNext(glyphs);
