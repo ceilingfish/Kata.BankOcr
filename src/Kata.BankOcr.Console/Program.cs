@@ -20,24 +20,23 @@ namespace Kata.BankOcr
                 {
                     var account = AccountNumber.Parse(glyphs);
 
-                    //if(row.Validity != RowValidity.Valid)
-                    //{
-                    //    var variants = row
-                    //        .GenerateVariants()
-                    //        .Where(v => v.Validity == RowValidity.Valid)
-                    //        .ToArray();
-
-                    //    switch(variants.Length)
-                    //    {
-                    //        case 0: return row;
-                    //        case 1: return variants[0];
-                    //        default:
-                    //            row.Validity = RowValidity.Ambiguous;
-                    //            return row;
-                    //    }
-                    //}
-
                     var validationResult = validator.Validate(account);
+
+                    if(!validationResult.IsValid)
+                    {
+                        var variants = account
+                            .GenerateVariants()
+                            .Where(variant => validator.Validate(variant).IsValid)
+                            .ToArray();
+                        if(variants.Length == 1)
+                        {
+                            return (Account: variants[0], Validity: ValidAccountNumberValidationResult.Default);
+                        }
+                        else if(variants.Length > 1)
+                        {
+                            return (Account: account, Validity: new AmbiguousValidationResult(variants));
+                        }
+                    }
 
                     return (Account: account, Validity: validationResult);
                 })
