@@ -24,8 +24,8 @@ namespace Kata.BankOcr
 
                     if(!validationResult.IsValid)
                     {
-                        var variants = account
-                            .GenerateVariants()
+                        var variants = AccountNumberVariantProvider
+                            .GenerateVariants(account)
                             .Where(variant => validator.Validate(variant).IsValid)
                             .ToArray();
                         if(variants.Length == 1)

@@ -35,35 +35,6 @@ namespace Kata.BankOcr.Core
             return new AccountNumber(digits);
         }
 
-        public IEnumerable<AccountNumber> GenerateVariants()
-        {
-            var variantChars = new[] { '|', '_', ' ' };
-            for (var i = 0; i < Digits.Count; i++)
-            {
-                var number = Digits[i];
-                foreach (var character in number.Glyph)
-                {
-                    foreach (var mutantChar in variantChars)
-                    {
-                        if (mutantChar == character.Character)
-                        {
-                            continue;
-                        }
-
-                        var mutatedGlyph = number.Glyph.Mutate(character, mutantChar);
-                        if (Digit.TryParse(mutatedGlyph, out var mutantDigit))
-                        {
-                            var mutatedRow = new List<Digit>(Digits)
-                            {
-                                [i] = mutantDigit
-                            };
-                            yield return new AccountNumber(mutatedRow);
-                        }
-                    }
-                }
-            }
-        }
-
         public override string ToString() => string.Join(string.Empty, Digits);
     }
 }
