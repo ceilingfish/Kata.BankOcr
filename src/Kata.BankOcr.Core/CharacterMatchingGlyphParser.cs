@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Kata.BankOcr
 {
-    public class CharacterMatchingGlyphParser : IOcrGlphyParser
+    public class CharacterMatchingGlyphParser : IGlyphParser
     {
         public static IEnumerable<CharacterMatchingGlyphParser> Numbers => new []
         {
@@ -99,7 +99,7 @@ namespace Kata.BankOcr
             this.Result = result;
         }
 
-        public bool TryParse(OcrGlyph glyph, out int number)
+        public bool TryParse(Glyph glyph, out int number)
         {
             if (glyph.Characters.GetLength(0) != Matrix.GetLength(0) || glyph.Characters.GetLength(1) != Matrix.GetLength(1))
             {

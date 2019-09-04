@@ -5,19 +5,19 @@ using System.Text;
 
 namespace Kata.BankOcr
 {
-    public class CascadingOcrGlyphParser : IOcrGlphyParser
+    public class CascadingGlyphParser : IGlyphParser
     {
-        public  static CascadingOcrGlyphParser Default { get; } = new CascadingOcrGlyphParser(CharacterMatchingGlyphParser.Numbers.ToArray());
+        public  static CascadingGlyphParser Default { get; } = new CascadingGlyphParser(CharacterMatchingGlyphParser.Numbers.ToArray());
 
 
-        private readonly IEnumerable<IOcrGlphyParser> parsers;
+        private readonly IEnumerable<IGlyphParser> parsers;
 
-        public CascadingOcrGlyphParser(params IOcrGlphyParser[] parsers)
+        public CascadingGlyphParser(params IGlyphParser[] parsers)
         {
             this.parsers = parsers;
         }
 
-        public bool TryParse(OcrGlyph glyph, out int number)
+        public bool TryParse(Glyph glyph, out int number)
         {
             foreach(var parser in parsers)
             {

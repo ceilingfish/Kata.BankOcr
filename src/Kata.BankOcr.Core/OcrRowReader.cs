@@ -16,9 +16,9 @@ namespace Kata.BankOcr
         {
             this.file = file;
         }
-        public IObservable<IReadOnlyList<OcrGlyph>> Rows()
+        public IObservable<IReadOnlyList<Glyph>> Rows()
         {
-            return Observable.Create<IReadOnlyList<OcrGlyph>>(observer =>
+            return Observable.Create<IReadOnlyList<Glyph>>(observer =>
             {
                 var lines = File.ReadLines(file).ToArray();
 
@@ -36,7 +36,7 @@ namespace Kata.BankOcr
                     }
 
                     var columns = line1.Length / 3;
-                    var glyphs = new OcrGlyph[columns];
+                    var glyphs = new Glyph[columns];
                     for(var column = 0; column<columns; column++)
                     {
                         var xOffset = column * 3;
@@ -46,7 +46,7 @@ namespace Kata.BankOcr
                                 { line2[xOffset], line2[xOffset+1], line2[xOffset+2] },
                                 { line3[xOffset], line3[xOffset+1], line3[xOffset+2] }
                         };
-                        glyphs[column] = new OcrGlyph(row, column, matrix);
+                        glyphs[column] = new Glyph(row, column, matrix);
                     }
 
                     observer.OnNext(glyphs);

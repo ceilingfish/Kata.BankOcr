@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Kata.BankOcr.Core;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -26,60 +27,62 @@ namespace Kata.BankOcr
 
 
 
-            var parser = CascadingOcrGlyphParser.Default;
+            var parser = CascadingGlyphParser.Default;
             var reader = new OcrRowReader(args[0]);
+            var validator = new ChecksumAccountValidator();
             var results = await reader
                 .Rows()
                 .Select(glyphs =>
                 {
-                    var numbers = new OcrNumber[glyphs.Count];
+                    var numbers = new Digit[glyphs.Count];
 
                     for(int i=0;i<numbers.Length;i++)
                     {
                         var glyph = glyphs[i];
                         if (parser.TryParse(glyph, out var number))
                         {
-                            numbers[i] = new OcrNumber(number, glyph);
+                            numbers[i] = new Digit(number, glyph);
                         }
                         else
                         {
-                            numbers[i] = new OcrNumber(glyph);
+                            numbers[i] = new Digit(glyph);
                         }
                     }
-                    var row = new OcrNumberRow(numbers);
+                    var account = new AccountNumber(numbers);
 
-                    if(row.Validity != RowValidity.Valid)
-                    {
-                        var variants = row
-                            .GenerateVariants()
-                            .Where(v => v.Validity == RowValidity.Valid)
-                            .ToArray();
+                    //if(row.Validity != RowValidity.Valid)
+                    //{
+                    //    var variants = row
+                    //        .GenerateVariants()
+                    //        .Where(v => v.Validity == RowValidity.Valid)
+                    //        .ToArray();
 
-                        switch(variants.Length)
-                        {
-                            case 0: return row;
-                            case 1: return variants[0];
-                            default:
-                                row.Validity = RowValidity.Ambiguous;
-                                return row;
-                        }
-                    }
+                    //    switch(variants.Length)
+                    //    {
+                    //        case 0: return row;
+                    //        case 1: return variants[0];
+                    //        default:
+                    //            row.Validity = RowValidity.Ambiguous;
+                    //            return row;
+                    //    }
+                    //}
 
-                    return row;
+                    var validationResult = validator.Validate(account);
+
+                    return (Account: account, Validity: validationResult);
                 })
-
                 .ToArray();
             
             if(args.Length > 1 && !string.IsNullOrEmpty(args[1]))
             {
-                await File.WriteAllLinesAsync(args[1], results.Select(r => r.ToString()));
+                await File.WriteAllLinesAsync(args[1], results.Select(r => $"{r.Account} {r.Validity.Description}"));
                 Console.WriteLine("Output written to {0}", args[1]);
             }
             else
             {
-                foreach(var row in results)
+                foreach(var (account, validity) in results)
                 {
-                    Console.WriteLine(row);
+                    Console.WriteLine($"{account} {validity.Description}");
                 }
             }
             Console.ReadLine();

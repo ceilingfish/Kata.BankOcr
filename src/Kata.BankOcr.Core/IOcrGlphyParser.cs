@@ -4,8 +4,8 @@ using System.Text;
 
 namespace Kata.BankOcr
 {
-    public interface IOcrGlphyParser
+    public interface IGlyphParser
     {
-        bool TryParse(OcrGlyph glyph, out int number);
+        bool TryParse(Glyph glyph, out int number);
     }
 }

@@ -4,18 +4,19 @@ using System.Text;
 
 namespace Kata.BankOcr
 {
-    public class OcrNumber
+    public class Digit
     {
-        public OcrGlyph Glyph { get; }
+        public Glyph Glyph { get; }
         public int? Number { get; }
+        public bool IsLegible => Number.HasValue;
 
-        public OcrNumber(int number, OcrGlyph glyph)
+        public Digit(int number, Glyph glyph)
         {
             Number = number;
             Glyph = glyph;
         }
 
-        public OcrNumber(OcrGlyph glyph)
+        public Digit(Glyph glyph)
         {
             Glyph = glyph;
         }

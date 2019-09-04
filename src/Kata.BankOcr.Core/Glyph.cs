@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Kata.BankOcr
 {
-    public class OcrGlyph
+    public class Glyph
     {
         public char[,] Characters { get; }
 
@@ -12,7 +12,7 @@ namespace Kata.BankOcr
 
         public int Column { get; }
 
-        public OcrGlyph(int row, int column, char[,] characters)
+        public Glyph(int row, int column, char[,] characters)
         {
             Row = row;
             Column = column;
