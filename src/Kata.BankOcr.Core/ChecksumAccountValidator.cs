@@ -1,12 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 
 namespace Kata.BankOcr.Core
 {
+    /// <summary>
+    /// Validates account numbers by generating a checksum.
+    /// </summary>
     public static class ChecksumAccountValidator
     {
+        /// <summary>
+        /// Return a validation result for a given account number
+        /// </summary>
+        /// <param name="account">The account to validate</param>
+        /// <returns>One of three results: 
+        ///     <list type="number">
+        ///         <item><see cref="IllegibleAccountNumberValidationResult"/> if we cannot read all digits in the account number</item>
+        ///         <item><see cref="InvalidChecksumValidationResult"/> if the checksum fails</item>
+        ///         <item><see cref="ValidAccountNumberValidationResult"/> if the checksum passes</item>
+        ///     </list>
+        /// </returns>
         public static IAccountNumberValidationResult Validate(AccountNumber account)
         {
             if(!account.IsLegible)

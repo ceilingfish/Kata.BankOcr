@@ -4,8 +4,17 @@ using System.IO;
 
 namespace Kata.BankOcr.Core
 {
+    /// <summary>
+    /// A utility that reads rows of characters into a list of glyphs
+    /// </summary>
     public static class GlyphRowReader
     {
+        /// <summary>
+        /// Interpret the character rows as glyphs
+        /// </summary>
+        /// <param name="lines">The rows from which to interpret glyphs</param>
+        /// <returns>An enumerable that contains each row of glyphs</returns>
+        /// <exception cref="InvalidDataException">Thrown if the characters don't conform to the format expected by the glyph specification</exception>
         public static IEnumerable<IReadOnlyList<Glyph>> Read(IReadOnlyList<string> lines)
         {
             if (lines.Count % 4 != 0)

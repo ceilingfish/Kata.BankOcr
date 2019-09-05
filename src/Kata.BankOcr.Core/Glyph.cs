@@ -6,6 +6,9 @@ using static Kata.BankOcr.Core.Glyph;
 
 namespace Kata.BankOcr.Core
 {
+    /// <summary>
+    /// Represents a character read from the source file. This is represented as a 3x3 matrix. This class supports equality based on the values in a matrix, to simplify comparison.
+    /// </summary>
     public class Glyph : IEnumerable<GlyphCharacter>
     {
         public static Glyph Zero { get; } = new Glyph(new char[,]
@@ -114,6 +117,12 @@ namespace Kata.BankOcr.Core
             this.characters = characters;
         }
 
+        /// <summary>
+        /// Create a new glyph based on the original, with one character replaced with another
+        /// </summary>
+        /// <param name="original">The character to remove</param>
+        /// <param name="replacement">The character to insert</param>
+        /// <returns>A new glyph that contains a copy of the data from this glyph with one character changed</returns>
         public Glyph Mutate(GlyphCharacter original, char replacement)
         {
             var newCharacters = (GlyphCharacter[,])characters.Clone();

@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace Kata.BankOcr.Core
 {
+    /// <summary>
+    /// Reports validation results to the console
+    /// </summary>
     public class ConsoleReporter : IAccountReporter
     {
         public static ConsoleReporter Default { get; } = new ConsoleReporter();

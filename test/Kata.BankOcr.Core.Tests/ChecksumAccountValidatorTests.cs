@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
+﻿using Xunit;
 
 namespace Kata.BankOcr.Core.Tests
 {
@@ -11,7 +7,6 @@ namespace Kata.BankOcr.Core.Tests
         [Fact]
         public void IllegibleAccountsAreInvalid()
         {
-            var validator = new ChecksumAccountValidator();
             var illegibleAccount = new AccountNumber(new[]
             {
                 new Digit(new Glyph(new char[3,3]
@@ -22,7 +17,7 @@ namespace Kata.BankOcr.Core.Tests
                 })),
                 new Digit(1, Glyph.One)
             });
-            var result = validator.Validate(illegibleAccount);
+            var result = ChecksumAccountValidator.Validate(illegibleAccount);
             Assert.False(result.IsValid);
             var illegibleResult = Assert.IsType<IllegibleAccountNumberValidationResult>(result);
             Assert.Single(illegibleResult.IllegibleDigits);
@@ -31,7 +26,6 @@ namespace Kata.BankOcr.Core.Tests
         [Fact]
         public void BadChecksumsAreInvalid()
         {
-            var validator = new ChecksumAccountValidator();
             var illegibleAccount = new AccountNumber(new[]
             {
                 new Digit(8, Glyph.Eight),
@@ -44,7 +38,7 @@ namespace Kata.BankOcr.Core.Tests
                 new Digit(8, Glyph.Eight),
                 new Digit(8, Glyph.Eight)
             });
-            var result = validator.Validate(illegibleAccount);
+            var result = ChecksumAccountValidator.Validate(illegibleAccount);
             Assert.False(result.IsValid);
             Assert.IsType<InvalidChecksumValidationResult>(result);
         }
@@ -52,7 +46,6 @@ namespace Kata.BankOcr.Core.Tests
         [Fact]
         public void AccurateChecksumsAreValid()
         {
-            var validator = new ChecksumAccountValidator();
             var illegibleAccount = new AccountNumber(new[]
             {
                 new Digit(7, Glyph.Seven),
@@ -65,7 +58,7 @@ namespace Kata.BankOcr.Core.Tests
                 new Digit(1, Glyph.One),
                 new Digit(1, Glyph.One)
             });
-            var result = validator.Validate(illegibleAccount);
+            var result = ChecksumAccountValidator.Validate(illegibleAccount);
             Assert.True(result.IsValid);
             Assert.Equal(ValidAccountNumberValidationResult.Default, result);
         }

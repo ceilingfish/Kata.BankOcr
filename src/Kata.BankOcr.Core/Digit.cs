@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Kata.BankOcr.Core
 {
+    /// <summary>
+    /// Represents a single digit
+    /// </summary>
     public class Digit
     {
         private static IReadOnlyList<(Glyph Symbol, int Result)> numbers = new[]
@@ -20,8 +23,19 @@ namespace Kata.BankOcr.Core
             (Glyph.Nine, 9)
         };
 
+        /// <summary>
+        /// The glyph that this digit was represented by
+        /// </summary>
         public Glyph Glyph { get; }
+
+        /// <summary>
+        /// The number (if the glyph matched one of the known patterns)
+        /// </summary>
         public int? Number { get; }
+
+        /// <summary>
+        /// True if the glyph is recognised as a digit, false otherwise
+        /// </summary>
         public bool IsLegible => Number.HasValue;
 
         public Digit(int number, Glyph glyph)
@@ -40,6 +54,12 @@ namespace Kata.BankOcr.Core
             return Number.HasValue ? Number.Value.ToString() : "?";
         }
 
+        /// <summary>
+        /// Try and convert a glyph into a digit
+        /// </summary>
+        /// <param name="input">The glyph</param>
+        /// <param name="match">The digit to store the result into</param>
+        /// <returns>True if it matched a digit pattern, false otherwise</returns>
         public static bool TryParse(Glyph input, out Digit match)
         {
             foreach (var (digitGlyph, number) in numbers)

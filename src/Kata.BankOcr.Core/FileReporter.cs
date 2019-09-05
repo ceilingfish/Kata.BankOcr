@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Kata.BankOcr.Core
 {
+    /// <summary>
+    /// Write the results of account number validation to a file
+    /// </summary>
     public class FileReporter : IAccountReporter
     {
         private readonly Lazy<StreamWriter> fileStream;
