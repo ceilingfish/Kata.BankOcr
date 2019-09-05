@@ -7,6 +7,8 @@ namespace Kata.BankOcr.Core
 {
     public class ConsoleReporter : IAccountReporter
     {
+        public static ConsoleReporter Default { get; } = new ConsoleReporter();
+
         public Task ReportAsync(AccountNumber account, IAccountNumberValidationResult validationResult)
         {
             Console.WriteLine($"{account} {validationResult.Description}");

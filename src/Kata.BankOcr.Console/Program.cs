@@ -1,17 +1,33 @@
 ﻿using Kata.BankOcr.Core;
-using System;
-using System.Collections.Generic;
+using Microsoft.Extensions.Configuration;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Kata.BankOcr
+namespace Kata.BankOcr.Console
 {
     class Program
     {
         static async Task Main(string[] args)
         {
-            var lines = await File.ReadAllLinesAsync(args[0]);
+            var config = new ConfigurationBuilder()
+                .AddCommandLine(args)
+                .Build()
+                .Get<Options>();
+
+            if(string.IsNullOrEmpty(config?.Input))
+            {
+                System.Console.Error.WriteLine("No input file defined");
+                return;
+            }
+            else if(!File.Exists(config.Input))
+            {
+                System.Console.Error.WriteLine("Cannot find input file {0}", config.Input);
+                return;
+            }
+
+
+            var lines = await File.ReadAllLinesAsync(config.Input);
             var results = GlyphRowReader
                 .Read(lines)
                 .Select(glyphs =>
@@ -41,13 +57,13 @@ namespace Kata.BankOcr
                 .ToArray();
             
             IAccountReporter reporter;
-            if(args.Length > 1 && !string.IsNullOrEmpty(args[1]))
+            if(!string.IsNullOrEmpty(config.Output))
             {
-                reporter = new FileReporter(args[1]);
+                reporter = new FileReporter(config.Output);
             }
             else
             {
-                reporter = new ConsoleReporter();
+                reporter = ConsoleReporter.Default;
             }
             
             using(reporter)
