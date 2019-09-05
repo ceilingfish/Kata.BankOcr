@@ -40,19 +40,23 @@ namespace Kata.BankOcr
                 })
                 .ToArray();
             
+            IAccountReporter reporter;
             if(args.Length > 1 && !string.IsNullOrEmpty(args[1]))
             {
-                await File.WriteAllLinesAsync(args[1], results.Select(r => $"{r.Account} {r.Validity.Description}"));
-                Console.WriteLine("Output written to {0}", args[1]);
+                reporter = new FileReporter(args[1]);
             }
             else
             {
-                foreach(var (account, validity) in results)
+                reporter = new ConsoleReporter();
+            }
+            
+            using(reporter)
+            {
+                foreach (var (account, validity) in results)
                 {
-                    Console.WriteLine($"{account} {validity.Description}");
+                    await reporter.ReportAsync(account, validity);
                 }
             }
-            Console.ReadLine();
         }
     }
 }

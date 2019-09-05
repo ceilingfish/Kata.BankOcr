@@ -1,0 +1,21 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Kata.BankOcr.Core
+{
+    public class ConsoleReporter : IAccountReporter
+    {
+        public Task ReportAsync(AccountNumber account, IAccountNumberValidationResult validationResult)
+        {
+            Console.WriteLine($"{account} {validationResult.Description}");
+            return Task.CompletedTask;
+        }
+
+        public void Dispose()
+        {
+            Console.ReadLine();
+        }
+    }
+}
