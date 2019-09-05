@@ -12,20 +12,19 @@ namespace Kata.BankOcr
         static async Task Main(string[] args)
         {
             var lines = await File.ReadAllLinesAsync(args[0]);
-            var validator = new ChecksumAccountValidator();
             var results = GlyphRowReader
                 .Read(lines)
                 .Select(glyphs =>
                 {
                     var account = AccountNumber.Parse(glyphs);
 
-                    var validationResult = validator.Validate(account);
+                    var validationResult = ChecksumAccountValidator.Validate(account);
 
                     if(!validationResult.IsValid)
                     {
                         var variants = AccountNumberVariantProvider
                             .GenerateVariants(account)
-                            .Where(variant => validator.Validate(variant).IsValid)
+                            .Where(variant => ChecksumAccountValidator.Validate(variant).IsValid)
                             .ToArray();
                         if(variants.Length == 1)
                         {

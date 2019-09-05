@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Kata.BankOcr.Core
 {
-    public class ChecksumAccountValidator : IAccountNumberValidator
+    public static class ChecksumAccountValidator
     {
-        public IAccountNumberValidationResult Validate(AccountNumber account)
+        public static IAccountNumberValidationResult Validate(AccountNumber account)
         {
             if(!account.IsLegible)
             {
