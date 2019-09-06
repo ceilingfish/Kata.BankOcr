@@ -11,7 +11,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kata.BankOcr.Core", "src\Ka
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{5B54D9DC-2466-4AF9-A434-0AAD1BD7EA74}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kata.BankOcr.Core.Tests", "test\Kata.BankOcr.Core.Tests\Kata.BankOcr.Core.Tests.csproj", "{C546E750-4728-4541-9F00-B7611CDF6262}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kata.BankOcr.Core.Tests", "test\Kata.BankOcr.Core.Tests\Kata.BankOcr.Core.Tests.csproj", "{C546E750-4728-4541-9F00-B7611CDF6262}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E19C8537-C203-4C73-88E5-6248D9D759EA}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
